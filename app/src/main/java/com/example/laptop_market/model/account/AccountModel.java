@@ -64,6 +64,13 @@ public class AccountModel implements IAccountContract.Model {
         db = FirebaseFirestore.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
     }
+    public AccountModel(Context context, FirebaseAuth firebaseAuth)
+    {
+        this.preferenceManager= new PreferenceManager(context);
+        this.firebaseAuth = firebaseAuth;
+        //db = FirebaseFirestore.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+    }
     // region Login account function
     @Override
     public void Login(Account account, OnLoginFinishListener listener) {
@@ -77,15 +84,6 @@ public class AccountModel implements IAccountContract.Model {
                         }
                         firebaseUser = task.getResult().getUser();
                         String UId = task.getResult().getUser().getUid();
-                        db.collection(AccountTable.TABLE_NAME).document(UId).get().addOnCompleteListener(
-                                task1 -> {
-                                    if(task1.isSuccessful()) {
-                                        String username = task1.getResult().getString(AccountTable.ACCOUNT_NAME);
-                                        preferenceManager.putString(Constants.KEY_USER_EMAIL, account.getEmail());
-                                        preferenceManager.putString(Constants.KEY_USER_NAME, username);
-                                    }
-                                }
-                        ).addOnFailureListener(e -> {e.printStackTrace();});
                         listener.OnLoginListener(true,"Success");
                     }
                     else{

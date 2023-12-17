@@ -72,8 +72,8 @@ public class BuyFragment extends Fragment implements IOrderContract.View.BuyFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        buyFragmentPresenter = new BuyFragmentPresenter(this, this.getContext());
         View view = inflater.inflate(R.layout.fragment_buy, container, false);
+        buyFragmentPresenter = new BuyFragmentPresenter(this, this.getContext());
         gridRequireLoginForBuy = view.findViewById(R.id.gridRequireLoginForBuy);
 
         // Create objects

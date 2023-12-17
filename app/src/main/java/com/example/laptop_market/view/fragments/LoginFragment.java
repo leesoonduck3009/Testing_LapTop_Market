@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LoginFragment extends Fragment implements IAccountContract.View.LoginFragmentView{
+    public void setLoginActivity(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
+    }
+
     public LoginActivity loginActivity;
     private Button btnLoginBack;
     private TextView txtSignUp;
@@ -47,16 +52,26 @@ public class LoginFragment extends Fragment implements IAccountContract.View.Log
     private TextView txtEmail;
     private PreferenceManager preferenceManager;
     private IAccountContract.Presenter.LoginFragmentPresenter presenter;
+    private TextView txtViewBug;
     private int Previous_Intent;
     public LoginFragment(LoginActivity loginActivity) {
         // Required empty public constructor
         this.loginActivity = loginActivity;
 
     }
+    public LoginFragment() {
+        // Required empty public constructor
 
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            if (arguments != null) {
+                loginActivity = arguments.getParcelable("loginActivity");
+            }
+        }
 
     }
 
@@ -71,6 +86,7 @@ public class LoginFragment extends Fragment implements IAccountContract.View.Log
         bttLogin = view.findViewById(R.id.bttLogin);
         txtPassword = view.findViewById(R.id.txtPasswordLogin);
         txtEmail = view.findViewById(R.id.txtEmailLogin);
+        txtViewBug = view.findViewById(R.id.txtViewBug);
         preferenceManager = new PreferenceManager(getContext());
         presenter = new LoginFragmentPresenter(this, getContext());
         // Disable button
@@ -111,6 +127,7 @@ public class LoginFragment extends Fragment implements IAccountContract.View.Log
             boolean isValidEmail = ValidateData.isValidEmail(email);
             if(!isValidEmail){
                 Toast.makeText(getContext(), "Vui lòng kiểm tra lại địa chỉ email", Toast.LENGTH_SHORT).show();
+                txtViewBug.setText("Vui lòng kiểm tra lại địa chỉ email");
             }
             else {
                 Account account = new Account();
@@ -196,6 +213,7 @@ public class LoginFragment extends Fragment implements IAccountContract.View.Log
             default:
                 intent = new Intent(getContext(), MainActivity.class);
         }
+        txtViewBug.setText("success");
         preferenceManager.putInt(FragmentActivityType.FRAGMENT_ACTIVITY,0);
         startActivity(intent);
         loginActivity.finish();
@@ -203,7 +221,8 @@ public class LoginFragment extends Fragment implements IAccountContract.View.Log
 
     @Override
     public void LoginFailed(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+        txtViewBug.setText(message);
     }
 
     private void hidKeyboard(){

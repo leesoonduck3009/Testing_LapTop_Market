@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 
 import com.example.laptop_market.R;
 
-public class HomeBaseFragment extends Fragment {
+public class    HomeBaseFragment extends Fragment {
     private FragmentManager fragmentManager;
     public boolean isSearch = false;
     public HomeFragment homeFragment;

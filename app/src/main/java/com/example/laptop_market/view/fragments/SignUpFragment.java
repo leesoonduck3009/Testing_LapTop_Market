@@ -37,11 +37,15 @@ public class SignUpFragment extends Fragment implements IAccountContract.View.Si
     private EditText editTextName;
     private TextView txtLogin;
     public LoginActivity loginActivity;
+    public TextView txtViewBug;
     private IAccountContract.Presenter.SignUpFragmentPresenter presenter;
 
     public SignUpFragment(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
     }
+    public SignUpFragment() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +65,7 @@ public class SignUpFragment extends Fragment implements IAccountContract.View.Si
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextPassword = view.findViewById(R.id.editTextPassword);
         presenter = new SignUpFragmentPresenter(this,getContext());
-
+        txtViewBug = view.findViewById(R.id.txtViewBug);
         // Disable button
         btnSignUp.setEnabled(false);
         btnSignUp.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.gray));
@@ -73,6 +77,11 @@ public class SignUpFragment extends Fragment implements IAccountContract.View.Si
         setListener();
         return view;
     }
+
+    public void setLoginActivity(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
+    }
+
     private void setListener()
     {
         btnSignUpBack.setOnClickListener(v -> {
@@ -131,6 +140,7 @@ public class SignUpFragment extends Fragment implements IAccountContract.View.Si
 
     @Override
     public void ShowError(String message) {
+        txtViewBug.setText(message);
         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
     }
 
