@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-            android:id="@+id/linearLayoutFragmentHome"
+    android:id="@+id/linearLayoutFragmentHome"
     >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/txtViewBug"/>
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/home_tool_bar"
             android:layout_width="match_parent"

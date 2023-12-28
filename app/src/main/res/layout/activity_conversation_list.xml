@@ -8,6 +8,7 @@
     android:animateLayoutChanges="true"
     tools:context=".view.activities.ConversationListActivity"
     android:orientation="vertical"
+    android:id="@+id/conversation_activity"
     >
 
         <LinearLayout

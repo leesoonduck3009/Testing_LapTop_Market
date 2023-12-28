@@ -45,6 +45,9 @@ public class SearchFragment extends Fragment implements  IStringFilterSearchCont
         this.homeBaseFragment = homeBaseFragment;
 
     }
+    public SearchFragment() {
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +105,10 @@ public class SearchFragment extends Fragment implements  IStringFilterSearchCont
 
     }
 //endregion
+
+    public void setHomeBaseFragment(HomeBaseFragment homeBaseFragment) {
+        this.homeBaseFragment = homeBaseFragment;
+    }
 
     private void showKeyboardAndFocusEditText() {
         edtTextSearch.requestFocus();

@@ -3,6 +3,7 @@ package com.example.laptop_market.view.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -92,7 +93,14 @@ public class HomeFragment extends Fragment implements IConversationContract.View
     }
 
     public HomeFragment(){
+        Log.d("Hello","World");
+    }
+    private TextView txtViewBug;
 
+    public void setHomeBaseFragment(HomeBaseFragment homeBaseFragment) {
+        this.homeBaseFragment = homeBaseFragment;
+        BrandAdapter brandAdapter = new BrandAdapter(getListBrand(), homeBaseFragment, getContext());
+        rcvBrand.setAdapter(brandAdapter);
     }
 
     @Override
@@ -106,6 +114,7 @@ public class HomeFragment extends Fragment implements IConversationContract.View
         btnNotificationHome = view.findViewById(R.id.btnNotificationHome);
         presenter = new HomeFragmentPresenter(this);
         txtNumberOfNewMessage = view.findViewById(R.id.txtNumberOfNewMessage);
+        txtViewBug = view.findViewById(R.id.txtViewBug);
         //Tạo list image để hiển thị slide show ViewPager
         List<Integer> imageList = new ArrayList<>();
         imageList.add(R.drawable.slide_show1);
@@ -117,8 +126,10 @@ public class HomeFragment extends Fragment implements IConversationContract.View
         // Tạo danh mục tìm kiếm
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(),2);
         rcvBrand.setLayoutManager(gridLayoutManager);
-        BrandAdapter brandAdapter = new BrandAdapter(getListBrand(),homeBaseFragment, getContext());
-        rcvBrand.setAdapter(brandAdapter);
+        if(homeBaseFragment!=null) {
+            BrandAdapter brandAdapter = new BrandAdapter(getListBrand(), homeBaseFragment, getContext());
+            rcvBrand.setAdapter(brandAdapter);
+        }
         //
         linearLayoutFragmentHome = view.findViewById(R.id.linearLayoutFragmentHome);
         linearLayoutFragmentHome.requestFocus();
@@ -133,6 +144,7 @@ public class HomeFragment extends Fragment implements IConversationContract.View
         chatMessageBtt.setOnClickListener(view -> {
             if (FirebaseAuth.getInstance().getCurrentUser() == null)
             {
+                txtViewBug.setText("Bạn cần phải đăng nhập để thực hiện chức năng này!");
                 MyDialog.showDialog(this.getContext(), "Bạn cần phải đăng nhập để thực hiện chức năng này!", MyDialog.DialogType.OK, new MyDialog.DialogClickListener() {
                     @Override
                     public void onYesClick() {
